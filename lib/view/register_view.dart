@@ -127,7 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   if (controller.validateRegister()) {
                     debugPrint('Registration Successful');
 
-                    Get.offNamed('/dashboard');
+                    Get.offAllNamed('/dashboard');
                   }
                 },
               ),

@@ -88,7 +88,7 @@ class LoginScreen extends GetView<AuthController> {
                       'Login attempted with email: ${controller.emailController.text.trim()}',
                     );
 
-                    Get.offNamed('/dashboard');
+                    Get.offAllNamed('/dashboard');
                     // or Get.toNamed('/dashboard');
                   }
                 },
