@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tastmanager/widgets/app_button.dart';
-import 'package:tastmanager/widgets/app_color.dart';
-import 'package:tastmanager/widgets/app_text_style.dart';
-import 'package:tastmanager/widgets/app_textfield.dart';
+import 'package:taskmanager/widgets/app_button.dart';
+import 'package:taskmanager/widgets/app_color.dart';
+import 'package:taskmanager/widgets/app_text_style.dart';
+import 'package:taskmanager/widgets/app_textfield.dart';
 import '../controllers/auth_controller.dart';
 
 class LoginScreen extends GetView<AuthController> {

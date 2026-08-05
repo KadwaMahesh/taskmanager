@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tastmanager/controllers/auth_controller.dart';
-import 'package:tastmanager/widgets/app_button.dart';
-import 'package:tastmanager/widgets/app_color.dart';
-import 'package:tastmanager/widgets/app_text_style.dart';
-import 'package:tastmanager/widgets/app_textfield.dart';
+import 'package:taskmanager/controllers/auth_controller.dart';
+import 'package:taskmanager/widgets/app_button.dart';
+import 'package:taskmanager/widgets/app_color.dart';
+import 'package:taskmanager/widgets/app_text_style.dart';
+import 'package:taskmanager/widgets/app_textfield.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -126,8 +126,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onPressed: () {
                   if (controller.validateRegister()) {
                     debugPrint('Registration Successful');
+
+                    Get.offNamed('/dashboard');
                   }
-                  Get.offNamed('/dashboard');
                 },
               ),
 

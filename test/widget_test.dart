@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:tastmanager/controllers/auth_controller.dart';
-import 'package:tastmanager/main.dart';
+import 'package:taskmanager/controllers/auth_controller.dart';
+import 'package:taskmanager/main.dart';
 
 void main() {
   testWidgets('Login screen loads successfully', (WidgetTester tester) async {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tastmanager/controllers/dashbord_controller.dart';
-import 'package:tastmanager/data/models/task_model.dart';
-import 'package:tastmanager/widgets/app_color.dart';
-import 'package:tastmanager/widgets/app_text_style.dart';
-import 'package:tastmanager/widgets/search_textfield.dart';
+import 'package:taskmanager/controllers/dashbord_controller.dart';
+import 'package:taskmanager/data/models/task_model.dart';
+import 'package:taskmanager/widgets/app_color.dart';
+import 'package:taskmanager/widgets/app_text_style.dart';
+import 'package:taskmanager/widgets/search_textfield.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});

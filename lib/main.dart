@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tastmanager/modules/auth_binding.dart';
-import 'package:tastmanager/view/dashbord_view.dart';
-import 'package:tastmanager/view/login_view.dart';
-import 'package:tastmanager/view/register_view.dart';
+import 'package:taskmanager/modules/auth_binding.dart';
+import 'package:taskmanager/view/dashbord_view.dart';
+import 'package:taskmanager/view/login_view.dart';
+import 'package:taskmanager/view/register_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

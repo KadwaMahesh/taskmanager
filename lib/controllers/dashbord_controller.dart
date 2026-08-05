@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:tastmanager/data/Api/api_service.dart';
-import 'package:tastmanager/data/models/task_model.dart';
+import 'package:taskmanager/data/Api/api_service.dart';
+import 'package:taskmanager/data/models/task_model.dart';
 
 class DashboardController extends GetxController {
   final ApiService _apiService = ApiService();

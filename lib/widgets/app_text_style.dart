@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tastmanager/widgets/app_color.dart';
+import 'package:taskmanager/widgets/app_color.dart';
 
 class AppTextStyle {
   static const TextStyle headingStyle = TextStyle(
