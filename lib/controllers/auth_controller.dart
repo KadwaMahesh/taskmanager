@@ -1,49 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class AuthController extends GetxController {
-  final GetStorage _storage = GetStorage();
-
-  static const String _isLoggedInKey = 'isLoggedIn';
-
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
-  final isLoading = false.obs;
-  final isPasswordVisible = false.obs;
+  final nameError = RxnString();
+  final emailError = RxnString();
+  final passwordError = RxnString();
+  final confirmPasswordError = RxnString();
 
-  bool get isUserLoggedIn => _storage.read(_isLoggedInKey) ?? false;
-
-  void togglePasswordVisibility() {
-    isPasswordVisible.value = !isPasswordVisible.value;
-  }
-
-  void login(GlobalKey<FormState> formKey) async {
-    if (!formKey.currentState!.validate()) return;
-
-    isLoading.value = true;
-
-    await Future.delayed(Duration(milliseconds: 600));
-
-    await _storage.write(_isLoggedInKey, true);
-
-    isLoading.value = false;
-
-    Get.offAllNamed('/dashboard');
-  }
-
-  void logout() async {
-    await _storage.remove(_isLoggedInKey);
-    emailController.clear();
-    passwordController.clear();
-    Get.offAllNamed('/login');
-  }
+  final obscurePassword = true.obs;
+  final obscureConfirmPassword = true.obs;
 
   @override
   void onClose() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
     super.onClose();
+  }
+
+  bool validateRegister() {
+    nameError.value = nameController.text.trim().isEmpty
+        ? 'Name is required'
+        : null;
+
+    final email = emailController.text.trim();
+    if (email.isEmpty) {
+      emailError.value = 'Email is required';
+    } else if (!RegExp(
+      r'^[\w\.\-]+@([\w\-]+\.)+[\w\-]{2,4}$',
+    ).hasMatch(email)) {
+      emailError.value = 'Enter a valid email';
+    } else {
+      emailError.value = null;
+    }
+
+    final password = passwordController.text;
+    if (password.isEmpty) {
+      passwordError.value = 'Password is required';
+    } else if (password.length < 6) {
+      passwordError.value = 'Password must be at least 6 characters';
+    } else {
+      passwordError.value = null;
+    }
+
+    final confirmPassword = confirmPasswordController.text;
+    if (confirmPassword.isEmpty) {
+      confirmPasswordError.value = 'Confirm password is required';
+    } else if (confirmPassword != password) {
+      confirmPasswordError.value = 'Passwords do not match';
+    } else {
+      confirmPasswordError.value = null;
+    }
+
+    return nameError.value == null &&
+        emailError.value == null &&
+        passwordError.value == null &&
+        confirmPasswordError.value == null;
+  }
+
+  bool validateLogin() {
+    emailError.value = null;
+    passwordError.value = null;
+
+    final email = emailController.text.trim();
+    final password = passwordController.text;
+
+    if (email.isEmpty) {
+      emailError.value = 'Email is required';
+    } else if (!RegExp(
+      r'^[\w\.\-]+@([\w\-]+\.)+[\w\-]{2,4}$',
+    ).hasMatch(email)) {
+      emailError.value = 'Enter a valid email';
+    }
+
+    if (password.isEmpty) {
+      passwordError.value = 'Password is required';
+    } else if (password.length < 6) {
+      passwordError.value = 'Password must be at least 6 characters';
+    }
+
+    return emailError.value == null && passwordError.value == null;
   }
 }

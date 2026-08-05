@@ -5,14 +5,14 @@ import 'package:tastmanager/widgets/app_text_style.dart';
 import 'package:tastmanager/widgets/app_textfield.dart';
 import '../controllers/auth_controller.dart';
 
-class LoginScreen extends GetView<AuthController> {
-  const LoginScreen({super.key});
+class RegisterScreen extends GetView<AuthController> {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login', style: AppTextStyle.subheadingStyle),
+        title: const Text('Register', style: AppTextStyle.subheadingStyle),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -24,12 +24,28 @@ class LoginScreen extends GetView<AuthController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               const Text(
-                'Sign In to TaskFlow',
+                'Create your account',
                 style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 28),
+
+              Obx(
+                () => AppTextfield(
+                  controller: controller.nameController,
+                  hintText: 'Name',
+                  prefixIcon: const Icon(Icons.person_outline),
+                  errorText: controller.nameError.value,
+                  onChanged: (_) {
+                    if (controller.nameError.value != null) {
+                      controller.nameError.value = null;
+                    }
+                  },
+                ),
+              ),
+
+              const SizedBox(height: 16),
 
               Obx(
                 () => AppTextfield(
@@ -74,16 +90,44 @@ class LoginScreen extends GetView<AuthController> {
                 ),
               ),
 
+              const SizedBox(height: 16),
+
+              Obx(
+                () => AppTextfield(
+                  controller: controller.confirmPasswordController,
+                  hintText: 'Confirm password',
+                  prefixIcon: const Icon(Icons.lock_outline),
+                  obscureText: controller.obscureConfirmPassword.value,
+                  errorText: controller.confirmPasswordError.value,
+                  onChanged: (_) {
+                    if (controller.confirmPasswordError.value != null) {
+                      controller.confirmPasswordError.value = null;
+                    }
+                  },
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      controller.obscureConfirmPassword.value
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                    ),
+                    onPressed: () {
+                      controller.obscureConfirmPassword.value =
+                          !controller.obscureConfirmPassword.value;
+                    },
+                  ),
+                ),
+              ),
+
               const SizedBox(height: 24),
 
               AppNavigationButton(
-                buttonHeading: 'Login',
-                icon: const Icon(Icons.login),
+                buttonHeading: 'Register',
+                icon: const Icon(Icons.person_add_alt_1),
                 onPressed: () {
-                  final isValid = controller.validateLogin();
+                  final isValid = controller.validateRegister();
                   if (isValid) {
                     debugPrint(
-                      'Login attempted with email: ${controller.emailController.text.trim()}',
+                      'Registering user: ${controller.emailController.text.trim()}',
                     );
                   }
                 },
@@ -93,17 +137,17 @@ class LoginScreen extends GetView<AuthController> {
 
               Center(
                 child: GestureDetector(
-                  onTap: () => Get.toNamed('/register'),
+                  onTap: () => Get.back(),
                   child: RichText(
                     text: const TextSpan(
                       style: TextStyle(fontSize: 14, color: Colors.black87),
                       children: [
                         TextSpan(
-                          text: "Don't have an account? ",
+                          text: 'Already have an account? ',
                           style: TextStyle(color: Colors.black54),
                         ),
                         TextSpan(
-                          text: 'Register',
+                          text: 'Login',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ],
@@ -111,6 +155,8 @@ class LoginScreen extends GetView<AuthController> {
                   ),
                 ),
               ),
+
+              const SizedBox(height: 24),
             ],
           ),
         ),
