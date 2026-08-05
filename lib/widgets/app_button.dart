@@ -38,7 +38,7 @@ class AppNavigationButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconTheme(
-                    data: const IconThemeData(color: AppColor.buttonTextColor),
+                    data: const IconThemeData(color: AppColor.white),
                     child: icon!,
                   ),
                   const SizedBox(width: 8),

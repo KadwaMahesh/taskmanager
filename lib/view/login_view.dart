@@ -13,6 +13,7 @@ class LoginScreen extends GetView<AuthController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Login', style: AppTextStyle.subheadingStyle),
         centerTitle: true,
         elevation: 0,
@@ -81,10 +82,14 @@ class LoginScreen extends GetView<AuthController> {
                 icon: const Icon(Icons.login),
                 onPressed: () {
                   final isValid = controller.validateLogin();
+
                   if (isValid) {
                     debugPrint(
                       'Login attempted with email: ${controller.emailController.text.trim()}',
                     );
+
+                    Get.offNamed('/dashboard');
+                    // or Get.toNamed('/dashboard');
                   }
                 },
               ),
