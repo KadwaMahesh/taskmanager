@@ -1,22 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tastmanager/controllers/auth_controller.dart';
 import 'package:tastmanager/widgets/app_button.dart';
+import 'package:tastmanager/widgets/app_color.dart';
 import 'package:tastmanager/widgets/app_text_style.dart';
 import 'package:tastmanager/widgets/app_textfield.dart';
-import '../controllers/auth_controller.dart';
 
-class RegisterScreen extends GetView<AuthController> {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final AuthController controller = Get.find<AuthController>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.clearForm();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Register', style: AppTextStyle.subheadingStyle),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black87,
+        backgroundColor: AppColor.pageBackgroundColor,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -27,7 +44,7 @@ class RegisterScreen extends GetView<AuthController> {
               const SizedBox(height: 16),
               const Text(
                 'Create your account',
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                style: AppTextStyle.headingStyle,
               ),
               const SizedBox(height: 28),
 
@@ -37,11 +54,7 @@ class RegisterScreen extends GetView<AuthController> {
                   hintText: 'Name',
                   prefixIcon: const Icon(Icons.person_outline),
                   errorText: controller.nameError.value,
-                  onChanged: (_) {
-                    if (controller.nameError.value != null) {
-                      controller.nameError.value = null;
-                    }
-                  },
+                  onChanged: (_) => controller.nameError.value = null,
                 ),
               ),
 
@@ -51,14 +64,10 @@ class RegisterScreen extends GetView<AuthController> {
                 () => AppTextfield(
                   controller: controller.emailController,
                   hintText: 'Email',
-                  prefixIcon: const Icon(Icons.mail_outline),
                   keyboardType: TextInputType.emailAddress,
+                  prefixIcon: const Icon(Icons.mail_outline),
                   errorText: controller.emailError.value,
-                  onChanged: (_) {
-                    if (controller.emailError.value != null) {
-                      controller.emailError.value = null;
-                    }
-                  },
+                  onChanged: (_) => controller.emailError.value = null,
                 ),
               ),
 
@@ -68,14 +77,10 @@ class RegisterScreen extends GetView<AuthController> {
                 () => AppTextfield(
                   controller: controller.passwordController,
                   hintText: 'Password',
-                  prefixIcon: const Icon(Icons.lock_outline),
                   obscureText: controller.obscurePassword.value,
+                  prefixIcon: const Icon(Icons.lock_outline),
                   errorText: controller.passwordError.value,
-                  onChanged: (_) {
-                    if (controller.passwordError.value != null) {
-                      controller.passwordError.value = null;
-                    }
-                  },
+                  onChanged: (_) => controller.passwordError.value = null,
                   suffixIcon: IconButton(
                     icon: Icon(
                       controller.obscurePassword.value
@@ -83,8 +88,7 @@ class RegisterScreen extends GetView<AuthController> {
                           : Icons.visibility_off_outlined,
                     ),
                     onPressed: () {
-                      controller.obscurePassword.value =
-                          !controller.obscurePassword.value;
+                      controller.obscurePassword.toggle();
                     },
                   ),
                 ),
@@ -95,15 +99,12 @@ class RegisterScreen extends GetView<AuthController> {
               Obx(
                 () => AppTextfield(
                   controller: controller.confirmPasswordController,
-                  hintText: 'Confirm password',
-                  prefixIcon: const Icon(Icons.lock_outline),
+                  hintText: 'Confirm Password',
                   obscureText: controller.obscureConfirmPassword.value,
+                  prefixIcon: const Icon(Icons.lock_outline),
                   errorText: controller.confirmPasswordError.value,
-                  onChanged: (_) {
-                    if (controller.confirmPasswordError.value != null) {
-                      controller.confirmPasswordError.value = null;
-                    }
-                  },
+                  onChanged: (_) =>
+                      controller.confirmPasswordError.value = null,
                   suffixIcon: IconButton(
                     icon: Icon(
                       controller.obscureConfirmPassword.value
@@ -111,8 +112,7 @@ class RegisterScreen extends GetView<AuthController> {
                           : Icons.visibility_off_outlined,
                     ),
                     onPressed: () {
-                      controller.obscureConfirmPassword.value =
-                          !controller.obscureConfirmPassword.value;
+                      controller.obscureConfirmPassword.toggle();
                     },
                   ),
                 ),
@@ -124,11 +124,8 @@ class RegisterScreen extends GetView<AuthController> {
                 buttonHeading: 'Register',
                 icon: const Icon(Icons.person_add_alt_1),
                 onPressed: () {
-                  final isValid = controller.validateRegister();
-                  if (isValid) {
-                    debugPrint(
-                      'Registering user: ${controller.emailController.text.trim()}',
-                    );
+                  if (controller.validateRegister()) {
+                    debugPrint('Registration Successful');
                   }
                 },
               ),
@@ -137,9 +134,12 @@ class RegisterScreen extends GetView<AuthController> {
 
               Center(
                 child: GestureDetector(
-                  onTap: () => Get.back(),
+                  onTap: () {
+                    controller.clearForm();
+                    Get.back();
+                  },
                   child: RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       style: TextStyle(fontSize: 14, color: Colors.black87),
                       children: [
                         TextSpan(

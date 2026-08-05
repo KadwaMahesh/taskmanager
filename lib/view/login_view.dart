@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tastmanager/widgets/app_button.dart';
+import 'package:tastmanager/widgets/app_color.dart';
 import 'package:tastmanager/widgets/app_text_style.dart';
 import 'package:tastmanager/widgets/app_textfield.dart';
 import '../controllers/auth_controller.dart';
@@ -15,8 +16,7 @@ class LoginScreen extends GetView<AuthController> {
         title: const Text('Login', style: AppTextStyle.subheadingStyle),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black87,
+        backgroundColor: AppColor.pageBackgroundColor,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -27,7 +27,7 @@ class LoginScreen extends GetView<AuthController> {
               const SizedBox(height: 24),
               const Text(
                 'Sign In to TaskFlow',
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                style: AppTextStyle.headingStyle,
               ),
               const SizedBox(height: 32),
 
