@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tastmanager/controllers/auth_controller.dart';
 import 'package:tastmanager/modules/auth_binding.dart';
 import 'package:tastmanager/view/dashbord_view.dart';
 import 'package:tastmanager/view/login_view.dart';
